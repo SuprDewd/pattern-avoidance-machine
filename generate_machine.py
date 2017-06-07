@@ -10,6 +10,10 @@ def generate(patt):
 bool contains(int n, int *perm) {
 ''' % (''.join(map(str,patt)), ))
 
+    if patt[0] == 1:
+        indent(1)
+        sys.stdout.write('int mn = n+1;\n')
+
     for at in range(len(patt)):
         idx = 0
         while patt[idx] != at+1:
@@ -29,6 +33,10 @@ bool contains(int n, int *perm) {
             'l': (str(idx) if l == -1 else 'a%d+%d' % (patt[l]-1, idx-l)),
             'r': ('n-%d' % (len(patt)-idx) if r == len(patt) else 'a%d-%d' % (patt[r]-1,r-idx)),
         })
+
+        if at == 0 and patt[at] == 1:
+            indent(1)
+            sys.stdout.write('if (perm[a%d] < mn && (mn = perm[a%d]))\n' % (at, at)) # The lazy assignment at the end assumes perm[i] > 0, which is true because our permutations are 1-based
 
         if at > 0:
             indent(1)
@@ -56,7 +64,7 @@ def main(argv):
 
     patt = list(map(int, patt))
     generate(patt)
-
+    return 0
 
 if __name__ == '__main__':
     sys.exit(main(sys.argv))
