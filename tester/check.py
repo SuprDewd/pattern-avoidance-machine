@@ -4,9 +4,9 @@ from itertools import permutations
 from subprocess import Popen, PIPE
 import time
 
-def doit(k1,k2):
+def doit(n1,n2,k1,k2):
 
-    for n in range(1,5):
+    for n in range(n1,n2+1):
         for patt in permutations(list(range(1,n+1))):
 
             p = Popen('python ../generate_machine.py ' + ''.join(map(str, patt)), shell=True, stdout=PIPE, stdin=PIPE)
@@ -48,6 +48,13 @@ def doit(k1,k2):
                 out2 = ''.join([ '%s\n' % x for x in arr ])
                 assert out == out2
 
-doit(0,8)
-doit(9,9)
+print('# patterns of length 1-4, validity')
+doit(1,4,0,8)
+print('# patterns of length 1-4, benchmark')
+doit(1,4,9,9)
+
+print('# patterns of length 5, validity')
+doit(5,5,0,8)
+print('# patterns of length 5, benchmark')
+doit(5,5,9,9)
 
