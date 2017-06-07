@@ -10,14 +10,7 @@ def generate(patt):
 bool contains(int n, int *perm) {
 ''' % (''.join(map(str,patt)), ))
 
-    # TODO: We can decide which order we fill in the inverse permutation, maybe we should build it from left to right?
-
-    def rec(at, depth):
-        if at == len(patt):
-            indent(depth+1)
-            sys.stdout.write('return true;\n')
-            return
-
+    for at in range(len(patt)):
         idx = 0
         while patt[idx] != at+1:
             idx += 1
@@ -30,24 +23,19 @@ bool contains(int n, int *perm) {
         while r < len(patt) and patt[r] > patt[idx]:
             r += 1
 
-        indent(depth)
+        indent(1)
         sys.stdout.write('for (int a%(i)d = %(l)s; a%(i)d <= %(r)s; ++a%(i)d)\n' % {
             'i': at,
             'l': (str(idx) if l == -1 else 'a%d+%d' % (patt[l]-1, idx-l)),
             'r': ('n-%d' % (len(patt)-idx) if r == len(patt) else 'a%d-%d' % (patt[r]-1,r-idx)),
-            })
+        })
 
         if at > 0:
-            indent(depth)
+            indent(1)
             sys.stdout.write('if (perm[a%d] < perm[a%d])\n' % (at-1,at))
 
-        rec(at+1, depth)
-
-        # indent(depth)
-        # sys.stdout.write('}\n')
-
-
-    rec(0,1)
+    indent(2)
+    sys.stdout.write('return true;\n')
 
     indent(1)
     sys.stdout.write('return false;\n')
