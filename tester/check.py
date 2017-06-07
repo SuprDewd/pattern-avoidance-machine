@@ -4,20 +4,6 @@ from itertools import permutations
 from subprocess import Popen, PIPE
 import time
 
-# patt = [ int(x)-1 for x in sys.argv[1] ]
-# n = int(sys.argv[2])
-#
-# patt = Perm(patt)
-#
-# # C = PermSet.avoiding(Perm(patt))
-# #
-# # for x in C.of_length(n):
-# #     print(' '.join([ str(y+1) for y in x ]))
-#
-# for p in permutations(list(range(n))):
-#     if Perm(p).avoids(patt):
-#         print(' '.join([ str(y+1) for y in p ]))
-
 def doit(k1,k2):
 
     for n in range(1,5):
